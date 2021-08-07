@@ -1,7 +1,9 @@
 import React from 'react';
-
-import Servicos from './src/telas/Servicos';
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
+import TelaPadrao from './src/componentes/TelaPadrao';
+import Rotas from './src/Rotas';
 
 export default function App() {
-    return <Servicos></Servicos>;
+    return <TelaPadrao><Rotas/></TelaPadrao>;
 }

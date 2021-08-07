@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Botao from '../../../componentes/Botao';
 import CampoInteiro from '../../../componentes/CampoInteiro';
 import estilos from './estilos';
 
-export default function Item({nome, preco, descricao}){
-    const [quantidade, setQuantidade] = useState(1)
-    const [total, setTotal] = useState(preco)
-    const [expandir, setExpandir] = useState(false)
+export default function Item({nome, preco, descricao, quantidade : quantidadeInicial}){
+    const [quantidade, setQuantidade] = useState(quantidadeInicial)
+    const [total, setTotal] = useState(preco*quantidadeInicial)
 
     const atualizaQuantidadeTotal = (novaQuantidade) => {
         setQuantidade(novaQuantidade)
@@ -18,20 +17,15 @@ export default function Item({nome, preco, descricao}){
         setTotal(novaQuantidade*preco)
     }
 
-    const inverteExpandir = () => {
-        setExpandir(!expandir)
-        atualizaQuantidadeTotal(1)
-    }
-
     return <>
-    <TouchableOpacity style={estilos.informacao} onPress = {inverteExpandir}> 
+    <View style={estilos.informacao}> 
         <Text style={estilos.nome}>{nome}</Text>
         <Text style={estilos.descricao}>{descricao}</Text>
         <Text style={estilos.preco}>{Intl.NumberFormat('pt-BR', {
             style: 'currency', currency: 'BRL'
         }).format(preco)}</Text>    
-    </TouchableOpacity>
-    {expandir &&
+    </View>
+
     <View style={estilos.carrinho}>
         <View>
             <View style={estilos.valor}>
@@ -45,9 +39,8 @@ export default function Item({nome, preco, descricao}){
         }).format(total)}</Text>
             </View> 
         </View> 
-        <Botao valor = "Adicionar ao Carrinho" acao = {() => {}}/>
+        <Botao valor = "Remover do Carrinho" acao = {() => {}}/>
     </View>
-    }
     <View style = {estilos.divisor}/>
     </>
 }
